@@ -5,10 +5,12 @@ import Tab from '@mui/material/Tab'
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
-    const [rideType, setRideType] = useState('');
+   
 
-    const handleChange = (event, newValue) => {
-      setRide(newValue)
+  const handleChange = (event, newValue) => {
+    setRide(newValue)
+    console.log(newValue)
+      
   };
 
   const handleRideTypes = (e) =>{
@@ -18,14 +20,16 @@ export default function Home() {
     <Layout title="Nearest Ride">
       <Tabs
         value={ride}
-        textColor="#FFF"
+        // textColor={rideType == ride ? "#FFF" : "#D0CBCB"}
         onChange={handleChange}
         aria-label="rideTypes"
         TabIndicatorProps={{ style: { background: "#fff" } }}
+        style={{marginTop: "22px"}}
+        textColor="inherit"
     >
-        <Tab label="Nearest rides" onClick={() => handleRideTypes('nearest')} value="nearest" style={{paddingLeft: 0, paddingRight: 0}} className="rideOptions"/>
-        <Tab label="Upcoming rides" onClick={() => handleRideTypes('upcoming')} value="upcoming" className="rideOptions"/>
-        <Tab label="Past rides" onClick={() => handleRideTypes('past')} value="past" className="rideOptions"/>
+        <Tab label="Nearest rides" value="nearest"  className="rideOptions"/>
+        <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} />
+        <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}}/>
     </Tabs>
     </Layout>
   )

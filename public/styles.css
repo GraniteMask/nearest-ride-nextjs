@@ -44,6 +44,9 @@
 
 .rideOptions{
     text-transform: none;
+    padding-left: 0;
+    padding-right: 0;
+    max-width: fit-content !important;
 }
 
 
