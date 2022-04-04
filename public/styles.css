@@ -2,4 +2,22 @@
 
 *{
     font-family: 'Inter', sans-serif !important;
+    color: #fff;
+}
+
+.grow {
+    flex-grow: 1;
+}
+
+.banner{
+    color: white;
+    font-size: 2rem !important;
+    font-weight: 600 !important;
+}
+
+.footer{
+    text-align: center !important;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
 }

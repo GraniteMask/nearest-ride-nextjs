@@ -25,11 +25,14 @@ export default function Layout({title, description, children}) {
         },
         palette:{
             primary:{
-                main: '#f0c000',
+                main: '#fff',
             },
             secondary:{
-                main: "#208080",
-            }
+                main: "#D0CBCB",
+            },
+            background: {
+                default: "#292929",
+            },
         },
     })
 
@@ -50,8 +53,8 @@ export default function Layout({title, description, children}) {
                         <Box display="flex" alignItems="center">
                         <NextLink href="/" passHref>
                             <Link>
-                                <Typography>
-                                Edvora
+                                <Typography className="banner">
+                                    Edvora
                                 </Typography>
                             </Link>
                         </NextLink>
@@ -70,7 +73,7 @@ export default function Layout({title, description, children}) {
                 <Container >
                     {children}
                 </Container>
-                <footer >
+                <footer className="footer">
                     <Typography>
                         &copy; 2022 Edvora. All rights reserved. 
                     </Typography>
