@@ -7,7 +7,7 @@ export default function Home() {
   const [ride, setRide] = useState('nearest');
     const [rideType, setRideType] = useState('');
 
-    const handleChange = (newValue) => {
+    const handleChange = (event, newValue) => {
       setRide(newValue)
   };
 
