@@ -5,12 +5,12 @@ import {AppBar, Typography, Toolbar, Container, Link, ThemeProvider, CssBaseline
 import { createTheme } from '@material-ui/core/styles'
 import axios from 'axios'
 import { Avatar } from '@mui/material'
-import PropTypes from 'prop-types';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
+;
 
 
 export default function Layout({title, description, children}) {
+    
+    
     const theme = createTheme({
         typography:{
             h1:{
@@ -40,7 +40,7 @@ export default function Layout({title, description, children}) {
         },
     })
 
-    
+   
 
     
  
@@ -79,6 +79,7 @@ export default function Layout({title, description, children}) {
                         
                     </Toolbar>
                 </AppBar>
+                
                 <div className="children" >
                     {children}
                 </div>
