@@ -4,12 +4,10 @@ import NextLink from 'next/link'
 import {AppBar, Typography, Toolbar, Container, Link, ThemeProvider, CssBaseline, Switch, Badge, Button, Menu, MenuItem, Box, IconButton, Drawer, Divider, List, ListItem, ListItemText} from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
 import axios from 'axios'
+import dynamic from 'next/dynamic';
 
 
-export default function Layout({title, description, children}) {
-    const router = useRouter()
-    const {state, dispatch} = useContext(Store)
-    const {darkMode, cart, userInfo} = state;
+function Layout({title, description, children}) {
     const theme = createTheme({
         typography:{
             h1:{
@@ -63,7 +61,7 @@ export default function Layout({title, description, children}) {
                         <div className="grow"></div>
 
                         <div>
-
+                            Ratnadeep
                         </div>
                         
                         
@@ -82,3 +80,5 @@ export default function Layout({title, description, children}) {
         </div>
     )
 }
+
+export default dynamic(() => Promise.resolve(Layout), { ssr: true });
