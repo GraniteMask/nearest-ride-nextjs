@@ -23,9 +23,9 @@ export default function Home() {
         aria-label="rideTypes"
         TabIndicatorProps={{ style: { background: "#fff" } }}
     >
-        <Tab label="nearest" onClick={() => handleRideTypes('nearest')} value="nearest" style={{paddingLeft: 0, paddingRight: 0}}/>
-        <Tab label="upcoming" onClick={() => handleRideTypes('upcoming')} value="upcoming"/>
-        <Tab label="past" onClick={() => handleRideTypes('past')} value="past"/>
+        <Tab label="Nearest rides" onClick={() => handleRideTypes('nearest')} value="nearest" style={{paddingLeft: 0, paddingRight: 0}} className="rideOptions"/>
+        <Tab label="Upcoming rides" onClick={() => handleRideTypes('upcoming')} value="upcoming" className="rideOptions"/>
+        <Tab label="Past rides" onClick={() => handleRideTypes('past')} value="past" className="rideOptions"/>
     </Tabs>
     </Layout>
   )
