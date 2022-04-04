@@ -4,10 +4,9 @@ import NextLink from 'next/link'
 import {AppBar, Typography, Toolbar, Container, Link, ThemeProvider, CssBaseline, Switch, Badge, Button, Menu, MenuItem, Box, IconButton, Drawer, Divider, List, ListItem, ListItemText} from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
 import axios from 'axios'
-import dynamic from 'next/dynamic';
 
 
-function Layout({title, description, children}) {
+export default function Layout({title, description, children}) {
     const theme = createTheme({
         typography:{
             h1:{
@@ -81,4 +80,4 @@ function Layout({title, description, children}) {
     )
 }
 
-export default dynamic(() => Promise.resolve(Layout), { ssr: true });
+
