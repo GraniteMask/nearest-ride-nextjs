@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <Layout title="Nearest Ride">
       <div>
-       
+       sssss
       </div>
     </Layout>
   )

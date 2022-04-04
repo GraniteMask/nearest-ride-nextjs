@@ -4,6 +4,10 @@ import NextLink from 'next/link'
 import {AppBar, Typography, Toolbar, Container, Link, ThemeProvider, CssBaseline, Switch, Badge, Button, Menu, MenuItem, Box, IconButton, Drawer, Divider, List, ListItem, ListItemText} from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
 import axios from 'axios'
+import { Avatar } from '@mui/material'
+import PropTypes from 'prop-types';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 
 
 export default function Layout({title, description, children}) {
@@ -25,10 +29,10 @@ export default function Layout({title, description, children}) {
         },
         palette:{
             primary:{
-                main: '#fff',
+                main: '#101010',
             },
             secondary:{
-                main: "#D0CBCB",
+                main: "#fff",
             },
             background: {
                 default: "#292929",
@@ -48,7 +52,7 @@ export default function Layout({title, description, children}) {
             </Head>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <AppBar position="static" >
+                <AppBar position="static">
                     <Toolbar >
                         <Box display="flex" alignItems="center">
                         <NextLink href="/" passHref>
@@ -62,17 +66,22 @@ export default function Layout({title, description, children}) {
 
                         <div className="grow"></div>
 
-                        <div>
+                        <div className="userName">
                             Ratnadeep
+                            
                         </div>
+                        <div style={{marginLeft: "1rem"}}>
+                            <Avatar src="/static/images/avatar/1.jpg" />
+                        </div>
+                        
                         
                         
                         
                     </Toolbar>
                 </AppBar>
-                <Container >
+                <div className="children" >
                     {children}
-                </Container>
+                </div>
                 <footer className="footer">
                     <Typography>
                         &copy; 2022 Edvora. All rights reserved. 

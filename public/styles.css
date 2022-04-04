@@ -3,6 +3,8 @@
 *{
     font-family: 'Inter', sans-serif !important;
     color: #fff;
+    margin: 0;
+    padding: 0;
 }
 
 .grow {
@@ -12,7 +14,14 @@
 .banner{
     color: white;
     font-size: 2rem !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+    /* margin-left: 43px !important; */
+}
+
+.MuiToolbar-gutters{
+    padding: 0 !important;
+    padding-left: 43px !important;
+    padding-right: 43px !important;
 }
 
 .footer{
@@ -20,4 +29,15 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+}
+
+.userName{
+    font-weight: 700 ;
+}
+
+
+.children{
+  min-height: 100vh;
+  margin-left: 43px;
+  margin-right: 43px;
 }
