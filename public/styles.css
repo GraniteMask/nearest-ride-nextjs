@@ -11,9 +11,14 @@
     flex-grow: 1;
 }
 
+.navbar{
+    height: 84px;
+    justify-content: center;
+}
+
 .banner{
     color: white;
-    font-size: 2rem !important;
+    font-size: 36px !important;
     font-weight: 700 !important;
     /* margin-left: 43px !important; */
 }
@@ -33,6 +38,7 @@
 
 .userName{
     font-weight: 700 ;
+    font-size: 20px;
 }
 
 
@@ -60,6 +66,7 @@
     display: flex;
     padding: 22px 29px;
     position: relative;
+    border-radius: 10px !important;
 }
 
 .imageCard{
@@ -85,5 +92,7 @@
     margin-top: 22px;
     margin-right: 29px;
 }
+
+
 
 

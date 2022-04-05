@@ -1,12 +1,17 @@
+import React from "react";
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Button, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
+import { Button, Card, CardContent, Chip, Typography } from "@mui/material";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
   const textWhiteColor = "#FFFFFF"
 
@@ -15,10 +20,14 @@ export default function Home() {
     // console.log(newValue)
       
   };
+  
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
 
-  const handleRideTypes = (e) =>{
-      setRideType(e)
-  }
   return (
     <Layout title="Nearest Ride">
       <Tabs
@@ -34,9 +43,31 @@ export default function Home() {
         <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} />
         <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}}/>
         <div className="grow"></div>
-        <Button className="filterButton" color="inherit">
+        <Button 
+          className="filterButton" 
+          color="inherit"
+          id="filterButton"
+          aria-controls={open ? 'filterButton' : undefined}
+          aria-haspopup="true"
+          aria-expanded={open ? 'true' : undefined}
+          onClick={handleClick}
+        >
           <FilterListIcon /> Filters
         </Button>
+
+        <Menu
+          className="filters"
+          anchorEl={anchorEl}
+          open={open}
+          onClose={handleClose}
+          MenuListProps={{
+            'aria-labelledby': 'filters',
+          }}
+        >
+          <MenuItem onClick={handleClose} >Profile</MenuItem>
+          <MenuItem onClick={handleClose}>My account</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem>
+        </Menu>
         
       </Tabs>
         

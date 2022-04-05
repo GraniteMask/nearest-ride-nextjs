@@ -49,7 +49,7 @@ export default function Layout({title, description, children}) {
             </Head>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <AppBar position="static">
+                <AppBar position="static" className="navbar">
                     <Toolbar >
                         <Box display="flex" alignItems="center">
                         <NextLink href="/" passHref>
