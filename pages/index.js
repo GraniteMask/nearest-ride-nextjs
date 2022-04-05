@@ -204,7 +204,7 @@ export default function Home(props) {
                 Date: <span color={textWhiteColor}>{ride.date}</span>
               </Typography>
               <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                Distance: <span color={textWhiteColor}></span>
+                Distance: <span color={textWhiteColor}>{ride.nearest}</span>
               </Typography>
             </CardContent>
           </Card>
@@ -230,18 +230,30 @@ export async function getServerSideProps(){
         distanceMesh.push(distance)
       }
     }
-    
     data[i].distanceMesh = distanceMesh
     data[i].nearest = Math.min(...distanceMesh)
   }
+  var sortedData = data.slice().sort((a, b) => a.nearest - b.nearest);
+  
 
-  console.log(data)
+
+  
+  
+
+  // console.log(data)
+  
+  
+  console.log(sortedData)
   console.log(user.data.station_code)
 
-  return {
-    props: {
-      rides: data,
-      user: user.data
+  if(sortedData[0].nearest != Infinity){
+    return {
+      props: {
+        rides: sortedData,
+        user: user.data
+      }
     }
   }
+
+  
 }
