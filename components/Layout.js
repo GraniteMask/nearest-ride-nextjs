@@ -8,7 +8,7 @@ import { Avatar } from '@mui/material'
 ;
 
 
-export default function Layout({title, description, children}) {
+export default function Layout({title, description, name, imgUrl, children}) {
     
     
     const theme = createTheme({
@@ -64,11 +64,10 @@ export default function Layout({title, description, children}) {
                         <div className="grow"></div>
 
                         <div className="userName">
-                            Ratnadeep
-                            
+                            {name ? name : 'Ratnadeep'}
                         </div>
                         <div style={{marginLeft: "1rem"}}>
-                            <Avatar src="/static/images/avatar/1.jpg" />
+                            <Avatar src={imgUrl} />
                         </div>
                         
                         
