@@ -11,18 +11,21 @@ import { styled } from "@mui/system";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { AccordionDetails, ListItem } from "@material-ui/core";
 import axios from "axios";
+import moment from "moment";
 
 export default function Home(props) {
   const [ride, setRide] = useState('nearest');
   const [anchorEl, setAnchorEl] = useState(null);
-  const [nearest, setNearest] = useState(false)
+  const [nearest, setNearest] = useState(true)
   const [upcoming, setUpcoming] = useState(false)
   const [past, setPast] = useState(false)
-  const {rides, user} = props
+  const {rides, user, upcomingLength} = props
   const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
   const textWhiteColor = "#FFFFFF"
+  var today = new Date();
 
+  // console.log(today)
 
   const StyledFilter = styled((props)=>(
     <Menu
@@ -80,7 +83,7 @@ export default function Home(props) {
         textColor="inherit"
       >
         <Tab label="Nearest rides" value="nearest"  className="rideOptions" onClick={()=>handleOptions('nearest')}/>
-        <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} onClick={()=>handleOptions('upcoming')}/>
+        <Tab label={`Upcoming rides (${upcomingLength})`} value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} onClick={()=>handleOptions('upcoming')}/>
         <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}} onClick={()=>handleOptions('past')}/>
         <div className="grow"></div>
         <Button 
@@ -198,7 +201,7 @@ export default function Home(props) {
         
       </Tabs>
 
-      {
+      { nearest &&
         rides.map(ride=>(
           <Card className="rideCards" style={{backgroundColor: "#171717"}}>
             <CardContent>
@@ -231,7 +234,48 @@ export default function Home(props) {
           </Card>
         ))
       }
-        
+      
+      {
+        upcoming &&
+        rides.map(ride=>(
+          <>
+            {
+              moment(ride.date).format() > moment(today).format() ?
+              (
+                <Card className="rideCards" style={{backgroundColor: "#171717"}}>
+                  <CardContent>
+                    <img src={ride.map_url} alt="map" height="148" width="296" className="imageCard" />
+                  </CardContent>
+                  
+                  <CardContent >
+                    <Typography variant="body2" color={textLightColor} className="rideParams ">
+                      Ride Id: <span color={textWhiteColor}>{ride.id}</span>
+                  
+                      <span className="chipRow">
+                        <Chip label={ride.city} className="cityStateChip"/>
+                        <Chip label={ride.state} className="cityStateChip"/>
+                      </span>
+                      
+                    </Typography>
+                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
+                      Origin Station: <span color={textWhiteColor}>{ride.origin_station_code}</span>
+                    </Typography>
+                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                      station_path: <span color={textWhiteColor}>{JSON.stringify(ride.station_path)}</span>
+                    </Typography>
+                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                      Date: <span color={textWhiteColor}>{ride.date}</span>
+                    </Typography>
+                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                      Distance: <span color={textWhiteColor}>{ride.nearest}</span>
+                    </Typography>
+                  </CardContent>
+                </Card>
+              ) : ""
+            }
+          </>
+        ))
+      }
       
       
       
@@ -242,6 +286,8 @@ export default function Home(props) {
 export async function getServerSideProps(){
   const {data} = await axios.get('https://assessment.api.vweb.app/rides')
   const user = await axios.get('https://assessment.api.vweb.app/user')
+  var upcomingLength = 0 
+  var today = new Date();
   
   for(var i=0; i<data.length; i++){
     const distanceMesh = new Array()
@@ -255,6 +301,13 @@ export async function getServerSideProps(){
     data[i].nearest = Math.min(...distanceMesh)
   }
   var sortedData = data.slice().sort((a, b) => a.nearest - b.nearest);
+
+  for(var i=0; i<data.length; i++){
+    if(moment(data.date).format() > moment(today).format()){
+      upcomingLength = upcomingLength + 1
+    }
+  }
+  
   
   console.log(sortedData)
   console.log(user.data.station_code)
@@ -263,7 +316,8 @@ export async function getServerSideProps(){
     return {
       props: {
         rides: sortedData,
-        user: user.data
+        user: user.data,
+        upcomingLength
       }
     }
   }
