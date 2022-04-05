@@ -181,7 +181,7 @@ export default function Home(props) {
         rides.map(ride=>(
           <Card className="rideCards" style={{backgroundColor: "#171717"}}>
             <CardContent>
-              <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
+              <img src={ride.map_url} alt="map" height="148" width="296" className="imageCard" />
             </CardContent>
             
             <CardContent >
@@ -195,16 +195,16 @@ export default function Home(props) {
                 
               </Typography>
               <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
-                Origin Station: <span color={textWhiteColor}>002</span>
+                Origin Station: <span color={textWhiteColor}>{ride.origin_station_code}</span>
               </Typography>
               <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                station_path: <span color={textWhiteColor}>002</span>
+                station_path: <span color={textWhiteColor}>{JSON.stringify(ride.station_path)}</span>
               </Typography>
               <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                Date: <span color={textWhiteColor}>002</span>
+                Date: <span color={textWhiteColor}>{ride.date}</span>
               </Typography>
               <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                Distance: <span color={textWhiteColor}>002</span>
+                Distance: <span color={textWhiteColor}></span>
               </Typography>
             </CardContent>
           </Card>
@@ -221,6 +221,22 @@ export default function Home(props) {
 export async function getServerSideProps(){
   const {data} = await axios.get('https://assessment.api.vweb.app/rides')
   const user = await axios.get('https://assessment.api.vweb.app/user')
+  
+  for(var i=0; i<data.length; i++){
+    const distanceMesh = new Array()
+    for(var j=0; j<data[i].station_path.length;j++){
+      var distance = JSON.parse(data[i].station_path[j]) - JSON.parse(user.data.station_code)
+      if(distance >= 0){
+        distanceMesh.push(distance)
+      }
+    }
+    
+    data[i].distanceMesh = distanceMesh
+    data[i].nearest = Math.min(...distanceMesh)
+  }
+
+  console.log(data)
+  console.log(user.data.station_code)
 
   return {
     props: {
