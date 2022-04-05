@@ -49,5 +49,9 @@
     max-width: fit-content !important;
 }
 
+.filterButton{
+    margin-top: 22px;
+    text-transform: none;
+}
 
    

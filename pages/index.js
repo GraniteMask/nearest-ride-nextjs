@@ -3,6 +3,7 @@ import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
+import { Button } from "@mui/material";
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
@@ -33,9 +34,9 @@ export default function Home() {
           <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} />
           <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}}/>
           <div className="grow"></div>
-          <div style={{marginTop: "22px"}}>
+          <Button className="filterButton" color="inherit">
             <FilterListIcon /> Filters
-          </div>
+          </Button>
           
         </Tabs>
         
