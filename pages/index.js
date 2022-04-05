@@ -352,6 +352,7 @@ export async function getServerSideProps(){
   .filter((value, index, self) => self.indexOf(value) === index)
   
   console.log(states.sort())
+  console.log(city.sort())
   // console.log(sortedData)
   // console.log(user.data.station_code)
 
