@@ -15,6 +15,9 @@ import axios from "axios";
 export default function Home(props) {
   const [ride, setRide] = useState('nearest');
   const [anchorEl, setAnchorEl] = useState(null);
+  const [nearest, setNearest] = useState(false)
+  const [upcoming, setUpcoming] = useState(false)
+  const [past, setPast] = useState(false)
   const {rides, user} = props
   const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
@@ -47,6 +50,24 @@ export default function Home(props) {
     setAnchorEl(null);
   };
 
+  const handleOptions = (option) =>{
+    if(option == 'nearest'){
+      setNearest(true)
+      setUpcoming(false)
+      setPast(false)
+    }
+    if(option == 'upcoming'){
+      setUpcoming(true)
+      setNearest(false)
+      setPast(false)
+    }
+    if(option == 'past'){
+      setPast(true)
+      setUpcoming(false)
+      setNearest(false)
+    }
+  }
+
   return (
     <Layout title="Edvora Nearest Ride" description="Edvora Nearest Ride Web App" name={user.name} imgUrl={user.url}>
       <Tabs
@@ -58,9 +79,9 @@ export default function Home(props) {
         style={{marginTop: "22px"}}
         textColor="inherit"
       >
-        <Tab label="Nearest rides" value="nearest"  className="rideOptions"/>
-        <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} />
-        <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}}/>
+        <Tab label="Nearest rides" value="nearest"  className="rideOptions" onClick={()=>handleOptions('nearest')}/>
+        <Tab label="Upcoming rides (5)" value="upcoming" className="rideOptions" style={{marginLeft: "1rem"}} onClick={()=>handleOptions('upcoming')}/>
+        <Tab label="Past rides (4)" value="past" className="rideOptions" style={{marginLeft: "1rem"}} onClick={()=>handleOptions('past')}/>
         <div className="grow"></div>
         <Button 
           className="filterButton" 
@@ -234,14 +255,6 @@ export async function getServerSideProps(){
     data[i].nearest = Math.min(...distanceMesh)
   }
   var sortedData = data.slice().sort((a, b) => a.nearest - b.nearest);
-  
-
-
-  
-  
-
-  // console.log(data)
-  
   
   console.log(sortedData)
   console.log(user.data.station_code)
