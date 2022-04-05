@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Button, Card, CardContent, CardMedia, Typography } from "@mui/material";
+import { Button, Card, CardContent, CardMedia, Chip, Typography } from "@mui/material";
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
@@ -45,11 +45,17 @@ export default function Home() {
           <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
         </CardContent>
         
-        <CardContent>
-          <Typography variant="body2" color={textLightColor} className="rideParams">
+        <CardContent >
+          <Typography variant="body2" color={textLightColor} className="rideParams ">
             Ride Id: <span color={textWhiteColor}>002</span>
+         
+            <span className="chipRow">
+              <Chip label="City" className="cityStateChip"/>
+              <Chip label="State" className="cityStateChip"/>
+            </span>
+            
           </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
             Origin Station: <span color={textWhiteColor}>002</span>
           </Typography>
           <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
