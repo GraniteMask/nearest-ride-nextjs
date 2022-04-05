@@ -58,10 +58,16 @@
     width: 100%;
     margin-top: 30px;
     display: flex;
+    padding-left: 29px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+    
 }
 
 .imageCard{
-    border-radius: 20px;
+    border-radius: 5px;
+    margin-left: "29px" ;
 }
+
 
    

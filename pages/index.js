@@ -40,7 +40,7 @@ export default function Home() {
       </Tabs>
         
       <Card className="rideCards" style={{backgroundColor: "#101010"}}>
-        <CardContent >
+        <CardContent>
           <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
         </CardContent>
         
