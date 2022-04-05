@@ -54,4 +54,14 @@
     text-transform: none;
 }
 
+.rideCards{
+    width: 100%;
+    margin-top: 30px;
+    display: flex;
+}
+
+.imageCard{
+    border-radius: 20px;
+}
+
    
