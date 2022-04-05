@@ -186,11 +186,11 @@ export default function Home(props) {
             
             <CardContent >
               <Typography variant="body2" color={textLightColor} className="rideParams ">
-                Ride Id: <span color={textWhiteColor}>002</span>
+                Ride Id: <span color={textWhiteColor}>{ride.id}</span>
             
                 <span className="chipRow">
-                  <Chip label="City" className="cityStateChip"/>
-                  <Chip label="State" className="cityStateChip"/>
+                  <Chip label={ride.city} className="cityStateChip"/>
+                  <Chip label={ride.state} className="cityStateChip"/>
                 </span>
                 
               </Typography>
