@@ -104,10 +104,26 @@ export default function Home() {
                 </AccordionSummary>   
                 <AccordionDetails>
                   <List>
-                    <ListItem onClick={handleClose}>Profile</ListItem>
-                    <ListItem onClick={handleClose}>My account</ListItem>
-                    <ListItem onClick={handleClose}>Logout</ListItem>
-                  </List>         
+                    <MenuItem onClick={handleClose} sx={{
+                      borderRadius: "5px",
+                    '&:hover': {
+                      color: '#A5A5A5',
+                    },
+                    }}
+                    >
+                      Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleClose} sx={{
+                      borderRadius: "5px",
+                    '&:hover': {
+                      color: '#A5A5A5',
+                    },
+                    }}
+                    >
+                      Profile
+                    </MenuItem>
+                    
+                  </List>
                 </AccordionDetails>
               </Accordion>
               <Accordion className="filterButtons">
@@ -127,10 +143,26 @@ export default function Home() {
                 </AccordionSummary>  
                 <AccordionDetails>
                   <List>
-                    <ListItem onClick={handleClose}>Profile</ListItem>
-                    <ListItem onClick={handleClose}>My account</ListItem>
-                    <ListItem onClick={handleClose}>Logout</ListItem>
-                  </List>         
+                    <MenuItem onClick={handleClose} sx={{
+                      borderRadius: "5px",
+                    '&:hover': {
+                      color: '#A5A5A5',
+                    },
+                    }}
+                    >
+                      Profile
+                    </MenuItem>
+                    <MenuItem onClick={handleClose} sx={{
+                      borderRadius: "5px",
+                    '&:hover': {
+                      color: '#A5A5A5',
+                    },
+                    }}
+                    >
+                      Profile
+                    </MenuItem>
+                    
+                  </List>        
                 </AccordionDetails>
               </Accordion>
               
