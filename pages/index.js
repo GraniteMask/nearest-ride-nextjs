@@ -8,10 +8,11 @@ import { Button, Card, CardContent, CardMedia, Typography } from "@mui/material"
 export default function Home() {
   const [ride, setRide] = useState('nearest');
   const textLightColor = "#CFCFCF"
+  const textWhiteColor = "#FFFFFF"
 
   const handleChange = (event, newValue) => {
     setRide(newValue)
-    console.log(newValue)
+    // console.log(newValue)
       
   };
 
@@ -39,17 +40,26 @@ export default function Home() {
         
       </Tabs>
         
-      <Card className="rideCards" style={{backgroundColor: "#101010"}}>
+      <Card className="rideCards" style={{backgroundColor: "#171717"}}>
         <CardContent>
           <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
         </CardContent>
         
         <CardContent>
           <Typography variant="body2" color={textLightColor} className="rideParams">
-            Ride Id:
+            Ride Id: <span color={textWhiteColor}>002</span>
           </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams">
-            Origin Station:
+          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+            Origin Station: <span color={textWhiteColor}>002</span>
+          </Typography>
+          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+            station_path: <span color={textWhiteColor}>002</span>
+          </Typography>
+          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+            Date: <span color={textWhiteColor}>002</span>
+          </Typography>
+          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+            Distance: <span color={textWhiteColor}>002</span>
           </Typography>
         </CardContent>
       </Card>
