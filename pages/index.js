@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Button, Card, CardContent, Chip, Typography } from "@mui/material";
+import { Button, Card, CardContent, Chip, Divider, Typography } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from "@mui/system";
@@ -25,7 +25,8 @@ export default function Home() {
   ))(({theme}) => ({
     '& .MuiPaper-root':{
       width: "228px",
-      backgroundColor: "#000000"
+      backgroundColor: "#000000",
+      borderRadius: "10px",
     },
   }))
 
@@ -78,8 +79,9 @@ export default function Home() {
             'aria-labelledby': 'filters',
           }}
         >
-          <Typography style={{paddingLeft: "16px ", color: "A5A5A5", fontSize: "20px"}}>Filters</Typography>
-          <MenuItem onClick={handleClose} >Profile</MenuItem>
+          <Typography style={{paddingLeft: "22px", color: "#A5A5A5", fontSize: "20px", paddingTop: "10px"}}>Filters</Typography>
+          <Divider sx={{backgroundColor: "#A5A5A5", margin: "6px 20px "}}/>
+          <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
         </StyledFilter>
