@@ -8,6 +8,7 @@ import { Button, Card, CardContent, Chip, Divider, Typography } from "@mui/mater
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from "@mui/system";
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
@@ -79,22 +80,43 @@ export default function Home() {
             'aria-labelledby': 'filters',
           }}
         >
-          <Typography style={{paddingLeft: "22px", color: "#A5A5A5", fontSize: "20px", paddingTop: "10px"}}>Filters</Typography>
-          <Divider sx={{backgroundColor: "#A5A5A5", margin: "6px 20px"}}/>
-          <Button variant="contained" className="filterButtons" 
-          sx={{
-            backgroundColor: '#232323',
-            '&:hover': {
-              backgroundColor: '#000000',
-              color: '#A5A5A5',
-            },
-            justifyContent: "center",
-          }}>
-            State
-          </Button>
-          {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-          <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+          <div style={{margin: "6px 20px"}}>
+            <Typography style={{paddingLeft: "2px", color: "#A5A5A5", fontSize: "20px", paddingTop: "10px"}}>Filters</Typography>
+            <Divider sx={{backgroundColor: "#A5A5A5"}}/>
+            <Button variant="contained" className="filterButtons" 
+              sx={{
+                backgroundColor: '#232323',
+                '&:hover': {
+                  backgroundColor: '#000000',
+                  color: '#A5A5A5',
+                },
+                width: "100%",
+                marginTop: "1rem",
+                textTransform: "none"
+              }}
+              endIcon={<ArrowDropDownIcon />}
+            >
+              City 
+            </Button>
+            <Button variant="contained" className="filterButtons" 
+              sx={{
+                backgroundColor: '#232323',
+                '&:hover': {
+                  backgroundColor: '#000000',
+                  color: '#A5A5A5',
+                },
+                width: "100%",
+                marginTop: "0.5rem",
+                textTransform: "none"
+              }}
+              endIcon={<ArrowDropDownIcon />}
+            >
+              State 
+            </Button>
+            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
+            <MenuItem onClick={handleClose}>My account</MenuItem>
+            <MenuItem onClick={handleClose}>Logout</MenuItem> */}
+          </div>
         </StyledFilter>
         
       </Tabs>
