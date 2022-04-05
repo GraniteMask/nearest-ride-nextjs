@@ -93,6 +93,8 @@
     margin-right: 29px;
 }
 
-
+.filterButtons:hover{
+    background-color: '#232323' !important;
+}
 
 

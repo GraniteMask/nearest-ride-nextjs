@@ -67,7 +67,7 @@ export default function Home() {
           aria-expanded={open ? 'true' : undefined}
           onClick={handleClick}
         >
-          <FilterListIcon /> Filters
+          <FilterListIcon style={{marginRight: "0.5rem"}}/> Filters
         </Button>
 
         <StyledFilter
@@ -80,10 +80,21 @@ export default function Home() {
           }}
         >
           <Typography style={{paddingLeft: "22px", color: "#A5A5A5", fontSize: "20px", paddingTop: "10px"}}>Filters</Typography>
-          <Divider sx={{backgroundColor: "#A5A5A5", margin: "6px 20px "}}/>
-          <MenuItem onClick={handleClose}>Profile</MenuItem>
+          <Divider sx={{backgroundColor: "#A5A5A5", margin: "6px 20px"}}/>
+          <Button variant="contained" className="filterButtons" 
+          sx={{
+            backgroundColor: '#232323',
+            '&:hover': {
+              backgroundColor: '#000000',
+              color: '#A5A5A5',
+            },
+            justifyContent: "center",
+          }}>
+            State
+          </Button>
+          {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
-          <MenuItem onClick={handleClose}>Logout</MenuItem>
+          <MenuItem onClick={handleClose}>Logout</MenuItem> */}
         </StyledFilter>
         
       </Tabs>
