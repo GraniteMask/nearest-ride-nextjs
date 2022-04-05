@@ -44,7 +44,7 @@ export default function Layout({title, description, name, imgUrl, children}) {
     return (
         <div>
             <Head>
-                <title>{title? `${title} - PictureLand 2.0`:'PictureLand 2.0'}</title>
+                <title>{title? title : 'Edvora Nearest Ride'}</title>
                 {description && <meta name="description" content={description}></meta>}
             </Head>
             <ThemeProvider theme={theme}>

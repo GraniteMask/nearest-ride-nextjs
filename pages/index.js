@@ -48,7 +48,7 @@ export default function Home(props) {
   };
 
   return (
-    <Layout title="Nearest Ride" description="Edvora Nearest Ride Web App" name={user.name} imgUrl={user.url}>
+    <Layout title="Edvora Nearest Ride" description="Edvora Nearest Ride Web App" name={user.name} imgUrl={user.url}>
       <Tabs
         value={ride}
         // textColor={rideType == ride ? "#FFF" : "#D0CBCB"}
