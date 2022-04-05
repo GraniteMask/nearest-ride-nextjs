@@ -176,36 +176,42 @@ export default function Home(props) {
         </StyledFilter>
         
       </Tabs>
-        
-      <Card className="rideCards" style={{backgroundColor: "#171717"}}>
-        <CardContent>
-          <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
-        </CardContent>
-        
-        <CardContent >
-          <Typography variant="body2" color={textLightColor} className="rideParams ">
-            Ride Id: <span color={textWhiteColor}>002</span>
-         
-            <span className="chipRow">
-              <Chip label="City" className="cityStateChip"/>
-              <Chip label="State" className="cityStateChip"/>
-            </span>
+
+      {
+        rides.map(ride=>(
+          <Card className="rideCards" style={{backgroundColor: "#171717"}}>
+            <CardContent>
+              <img src="https://picsum.photos/200" alt="map" height="148" width="296" className="imageCard" />
+            </CardContent>
             
-          </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
-            Origin Station: <span color={textWhiteColor}>002</span>
-          </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-            station_path: <span color={textWhiteColor}>002</span>
-          </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-            Date: <span color={textWhiteColor}>002</span>
-          </Typography>
-          <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-            Distance: <span color={textWhiteColor}>002</span>
-          </Typography>
-        </CardContent>
-      </Card>
+            <CardContent >
+              <Typography variant="body2" color={textLightColor} className="rideParams ">
+                Ride Id: <span color={textWhiteColor}>002</span>
+            
+                <span className="chipRow">
+                  <Chip label="City" className="cityStateChip"/>
+                  <Chip label="State" className="cityStateChip"/>
+                </span>
+                
+              </Typography>
+              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
+                Origin Station: <span color={textWhiteColor}>002</span>
+              </Typography>
+              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                station_path: <span color={textWhiteColor}>002</span>
+              </Typography>
+              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                Date: <span color={textWhiteColor}>002</span>
+              </Typography>
+              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
+                Distance: <span color={textWhiteColor}>002</span>
+              </Typography>
+            </CardContent>
+          </Card>
+        ))
+      }
+        
+      
       
       
     </Layout>
