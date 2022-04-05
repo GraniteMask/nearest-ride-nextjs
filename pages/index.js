@@ -19,7 +19,7 @@ export default function Home(props) {
   const [nearest, setNearest] = useState(true)
   const [upcoming, setUpcoming] = useState(false)
   const [past, setPast] = useState(false)
-  const {rides, user, upcomingLength, pastLength} = props
+  const {rides, user, upcomingLength, pastLength, states, city} = props
   const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
   const textWhiteColor = "#FFFFFF"
@@ -34,7 +34,7 @@ export default function Home(props) {
     />
   ))(({theme}) => ({
     '& .MuiPaper-root':{
-      width: "228px",
+      width: "350px",
       backgroundColor: "#000000",
       borderRadius: "10px",
     },
@@ -122,7 +122,7 @@ export default function Home(props) {
                     backgroundColor: '#000000',
                     color: '#A5A5A5',
                   },
-                  width: "188px",
+                  width: "310px",
                   marginTop: "1rem",
                   textTransform: "none"
                 }}>
@@ -130,17 +130,19 @@ export default function Home(props) {
                 </AccordionSummary>   
                 <AccordionDetails>
                   <List>
-                    <MenuItem onClick={handleClose} sx={{
-                      borderRadius: "5px",
-                    '&:hover': {
-                      color: '#A5A5A5',
-                    },
-                    }}
-                    >
-                      Profile
-                    </MenuItem>
-
-                    
+                    {
+                      states && states.map(state=>(
+                        <MenuItem onClick={handleClose} sx={{
+                          borderRadius: "5px",
+                        '&:hover': {
+                          color: '#A5A5A5',
+                        },
+                        }}
+                        >
+                          {state}
+                        </MenuItem>
+                      ))
+                    }   
                   </List>
                 </AccordionDetails>
               </Accordion>
@@ -153,7 +155,7 @@ export default function Home(props) {
                     backgroundColor: '#000000',
                     color: '#A5A5A5',
                   },
-                  width: "188px",
+                  width: "310px",
                   marginTop: "0.5rem",
                   textTransform: "none"
                 }}>
@@ -161,24 +163,20 @@ export default function Home(props) {
                 </AccordionSummary>  
                 <AccordionDetails>
                   <List>
-                    <MenuItem onClick={handleClose} sx={{
-                      borderRadius: "5px",
-                    '&:hover': {
-                      color: '#A5A5A5',
-                    },
-                    }}
-                    >
-                      Profile
-                    </MenuItem>
-                    <MenuItem onClick={handleClose} sx={{
-                      borderRadius: "5px",
-                    '&:hover': {
-                      color: '#A5A5A5',
-                    },
-                    }}
-                    >
-                      Profile
-                    </MenuItem>
+                    {
+                      city && city.map(eachCity=>(
+                        <MenuItem onClick={handleClose} sx={{
+                          borderRadius: "5px",
+                        '&:hover': {
+                          color: '#A5A5A5',
+                        },
+                        }}
+                        >
+                          {eachCity}
+                        </MenuItem>
+                      ))
+                    }
+                    
                     
                   </List>        
                 </AccordionDetails>
@@ -350,6 +348,8 @@ export async function getServerSideProps(){
 
   const states = sortedData.map(item => item.state)
   .filter((value, index, self) => self.indexOf(value) === index)
+  const city = sortedData.map(item => item.city)
+  .filter((value, index, self) => self.indexOf(value) === index)
   
   console.log(states.sort())
   // console.log(sortedData)
@@ -361,7 +361,9 @@ export async function getServerSideProps(){
         rides: sortedData,
         user: user.data,
         upcomingLength,
-        pastLength
+        pastLength,
+        states,
+        city
       }
     }
   }
