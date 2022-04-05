@@ -7,7 +7,7 @@ import { Button, Card, CardContent, CardMedia, Typography } from "@mui/material"
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
-   
+  const textLightColor = "#CFCFCF"
 
   const handleChange = (event, newValue) => {
     setRide(newValue)
@@ -45,10 +45,11 @@ export default function Home() {
         </CardContent>
         
         <CardContent>
-          <Typography variant="body2" >
-            This impressive paella is a perfect party dish and a fun meal to cook
-            together with your guests. Add 1 cup of frozen peas along with the mussels,
-            if you like.
+          <Typography variant="body2" color={textLightColor} className="rideParams">
+            Ride Id:
+          </Typography>
+          <Typography variant="body2" color={textLightColor} className="rideParams">
+            Origin Station:
           </Typography>
         </CardContent>
       </Card>

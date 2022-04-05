@@ -58,10 +58,7 @@
     width: 100%;
     margin-top: 30px;
     display: flex;
-    padding-left: 29px;
-    padding-top: 22px;
-    padding-bottom: 22px;
-    
+    padding: 22px 29px;
 }
 
 .imageCard{
@@ -69,5 +66,8 @@
     margin-left: "29px" ;
 }
 
+.rideParams{
+    font-size: 18px !important;
+}
 
    
