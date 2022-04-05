@@ -7,6 +7,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import { Button, Card, CardContent, Chip, Typography } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from "@mui/system";
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
@@ -14,6 +15,19 @@ export default function Home() {
   const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
   const textWhiteColor = "#FFFFFF"
+
+
+  const StyledFilter = styled((props)=>(
+    <Menu
+      
+      {...props}
+    />
+  ))(({theme}) => ({
+    '& .MuiPaper-root':{
+      width: "228px",
+      backgroundColor: "#000000"
+    },
+  }))
 
   const handleChange = (event, newValue) => {
     setRide(newValue)
@@ -55,7 +69,7 @@ export default function Home() {
           <FilterListIcon /> Filters
         </Button>
 
-        <Menu
+        <StyledFilter
           className="filters"
           anchorEl={anchorEl}
           open={open}
@@ -64,10 +78,11 @@ export default function Home() {
             'aria-labelledby': 'filters',
           }}
         >
+          <Typography style={{paddingLeft: "16px ", color: "A5A5A5", fontSize: "20px"}}>Filters</Typography>
           <MenuItem onClick={handleClose} >Profile</MenuItem>
           <MenuItem onClick={handleClose}>My account</MenuItem>
           <MenuItem onClick={handleClose}>Logout</MenuItem>
-        </Menu>
+        </StyledFilter>
         
       </Tabs>
         
