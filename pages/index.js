@@ -10,10 +10,12 @@ import MenuItem from '@mui/material/MenuItem';
 import { styled } from "@mui/system";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { AccordionDetails, ListItem } from "@material-ui/core";
+import axios from "axios";
 
-export default function Home() {
+export default function Home(props) {
   const [ride, setRide] = useState('nearest');
   const [anchorEl, setAnchorEl] = useState(null);
+  const {rides, user} = props
   const open = Boolean(anchorEl);
   const textLightColor = "#CFCFCF"
   const textWhiteColor = "#FFFFFF"
@@ -208,4 +210,16 @@ export default function Home() {
       
     </Layout>
   )
+}
+
+export async function getServerSideProps(){
+  const {data} = await axios.get('https://assessment.api.vweb.app/rides')
+  const user = await axios.get('https://assessment.api.vweb.app/user')
+
+  return {
+    props: {
+      rides: data,
+      user: user.data
+    }
+  }
 }
