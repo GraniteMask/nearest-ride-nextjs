@@ -4,11 +4,12 @@ import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Button, Card, CardContent, Chip, Divider, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, Button, Card, CardContent, Chip, Divider, List, Typography } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from "@mui/system";
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import { AccordionDetails, ListItem } from "@material-ui/core";
 
 export default function Home() {
   const [ride, setRide] = useState('nearest');
@@ -83,36 +84,57 @@ export default function Home() {
           <div style={{margin: "6px 20px"}}>
             <Typography style={{paddingLeft: "2px", color: "#A5A5A5", fontSize: "20px", paddingTop: "10px"}}>Filters</Typography>
             <Divider sx={{backgroundColor: "#A5A5A5"}}/>
-            <Button variant="contained" className="filterButtons" 
-              sx={{
-                backgroundColor: '#232323',
-                '&:hover': {
-                  backgroundColor: '#000000',
-                  color: '#A5A5A5',
-                },
-                width: "100%",
-                marginTop: "1rem",
-                textTransform: "none"
-              }}
-              endIcon={<ArrowDropDownIcon />}
-            >
-              City 
-            </Button>
-            <Button variant="contained" className="filterButtons" 
-              sx={{
-                backgroundColor: '#232323',
-                '&:hover': {
-                  backgroundColor: '#000000',
-                  color: '#A5A5A5',
-                },
-                width: "100%",
-                marginTop: "0.5rem",
-                textTransform: "none"
-              }}
-              endIcon={<ArrowDropDownIcon />}
-            >
-              State 
-            </Button>
+            
+              <Accordion variant="contained" className="filterButtons" 
+                
+              >
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}
+                sx={{
+                  backgroundColor: '#232323',
+                  borderRadius: "5px",
+                  '&:hover': {
+                    backgroundColor: '#000000',
+                    color: '#A5A5A5',
+                  },
+                  width: "188px",
+                  marginTop: "1rem",
+                  textTransform: "none"
+                }}>
+                  <Typography>State</Typography>
+                </AccordionSummary>   
+                <AccordionDetails>
+                  <List>
+                    <ListItem onClick={handleClose}>Profile</ListItem>
+                    <ListItem onClick={handleClose}>My account</ListItem>
+                    <ListItem onClick={handleClose}>Logout</ListItem>
+                  </List>         
+                </AccordionDetails>
+              </Accordion>
+              <Accordion className="filterButtons">
+                <AccordionSummary expandIcon={<ArrowDropDownIcon />}
+                sx={{
+                  backgroundColor: '#232323',
+                  borderRadius: "5px",
+                  '&:hover': {
+                    backgroundColor: '#000000',
+                    color: '#A5A5A5',
+                  },
+                  width: "188px",
+                  marginTop: "0.5rem",
+                  textTransform: "none"
+                }}>
+                  <Typography>City </Typography>
+                </AccordionSummary>  
+                <AccordionDetails>
+                  <List>
+                    <ListItem onClick={handleClose}>Profile</ListItem>
+                    <ListItem onClick={handleClose}>My account</ListItem>
+                    <ListItem onClick={handleClose}>Logout</ListItem>
+                  </List>         
+                </AccordionDetails>
+              </Accordion>
+              
+           
             {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
             <MenuItem onClick={handleClose}>Logout</MenuItem> */}
