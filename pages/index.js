@@ -3,6 +3,7 @@ import { useState } from "react";
 import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
+import {useRouter} from 'next/router'
 import FilterListIcon from '@mui/icons-material/FilterList';
 import { Accordion, AccordionSummary, Button, Divider, List, Typography } from "@mui/material";
 import Menu from '@mui/material/Menu';
@@ -14,6 +15,7 @@ import axios from "axios";
 import moment from "moment";
 import RideCard from "../components/RideCard";
 
+
 export default function Home(props) {
   const [ride, setRide] = useState('nearest');
   const [anchorEl, setAnchorEl] = useState(null);
@@ -23,10 +25,10 @@ export default function Home(props) {
   const [past, setPast] = useState(false)
   const [chosenState, SetChosenState] = useState('')
   const [chosenCity, SetChosenCity] = useState('')
-  const {rides, user, upcomingLength, pastLength, states} = props
-  var {city} = props
+  const {rides, user, upcomingLength, pastLength, states, city} = props
   const open = Boolean(anchorEl);
   var today = new Date();
+  const Router = useRouter()
   
   const StyledFilter = styled((props)=>(
     <Menu
@@ -39,6 +41,17 @@ export default function Home(props) {
       borderRadius: "10px",
     },
   }))
+
+  useEffect(()=>{
+    if(rides){
+      for(var i=0; i<rides.length; i++){
+        if(rides[i].distanceMesh.length == 0){
+          Router.reload()
+        }
+      }
+    }
+    
+  },[])
 
   const handleChange = (event, newValue) => {
     setRide(newValue)
@@ -54,6 +67,7 @@ export default function Home(props) {
     setAnchorEl(null);
     console.log(e)
   };
+
 
   const chooseState = (e) => {
     setAnchorEl(null);
@@ -230,9 +244,11 @@ export default function Home(props) {
       </Tabs>
 
       { nearest && chosenState == '' && chosenCity == ''?
-        rides.map(ride=>(
-          <RideCard ride={ride} key={ride.id}/>
-        ))
+        rides.map(ride=>{
+            return(
+              <RideCard ride={ride} key={ride.id}/>
+            )
+        })
         :
         nearest && chosenState !== '' && chosenCity == ''?
         rides.map(ride=>{
@@ -330,55 +346,58 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(){
-  const {data} = await axios.get(`${process.env.RIDE_API}`)
-  const user = await axios.get(`${process.env.USER_API}`)
-  var upcomingLength = 0 
-  var pastLength = 0 
-  var today = new Date();
-  
-  for(var i=0; i<data.length; i++){
-    const distanceMesh = new Array()
-    for(var j=0; j<data[i].station_path.length;j++){
-      var distance = JSON.parse(data[i].station_path[j]) - JSON.parse(user.data.station_code)
-      if(distance >= 0){
-        distanceMesh.push(distance)
-      }
-    }
-    data[i].distanceMesh = distanceMesh
-    if(data[i].distanceMesh.length != 0){
-      data[i].nearest = Math.min(...distanceMesh)
-    }
+  try{
+    const {data} = await axios.get(`${process.env.RIDE_API}`)
+    const user = await axios.get(`${process.env.USER_API}`)
+    var upcomingLength = 0 
+    var pastLength = 0 
+    var today = new Date();
     
-  }
-  var sortedData = data.slice().sort((a, b) => a.nearest - b.nearest);
-
-  for(var i=0; i<data.length; i++){
-    if(moment(data[i].date).format() > moment(today).format()){
-      upcomingLength = upcomingLength + 1
+    for(var i=0; i<data.length; i++){
+      const distanceMesh = new Array()
+      for(var j=0; j<data[i].station_path.length;j++){
+        var distance = JSON.parse(data[i].station_path[j]) - JSON.parse(user.data.station_code)
+        if(distance >= 0){
+          distanceMesh.push(distance)
+        }
+      }
+      data[i].distanceMesh = distanceMesh
+      if(data[i].distanceMesh.length != 0){
+        data[i].nearest = Math.min(...distanceMesh)
+      }
+      
     }
-    if(moment(data[i].date).format() < moment(today).format()){
-      pastLength = pastLength + 1
-    }
-  }
+    var sortedData = data.slice().sort((a, b) => a.nearest - b.nearest);
 
-  const states = sortedData.map(item => item.state)
-  .filter((value, index, self) => self.indexOf(value) === index)
-  const city = sortedData.map(item => item.city)
-  .filter((value, index, self) => self.indexOf(value) === index)
-
-
-  if(sortedData[0].nearest != Infinity){
-    return {
-      props: {
-        rides: sortedData,
-        user: user.data,
-        upcomingLength,
-        pastLength,
-        states,
-        city
+    for(var i=0; i<data.length; i++){
+      if(moment(data[i].date).format() > moment(today).format()){
+        upcomingLength = upcomingLength + 1
+      }
+      if(moment(data[i].date).format() < moment(today).format()){
+        pastLength = pastLength + 1
       }
     }
-  }
 
-  
+    const states = sortedData.map(item => item.state)
+    .filter((value, index, self) => self.indexOf(value) === index)
+    const city = sortedData.map(item => item.city)
+    .filter((value, index, self) => self.indexOf(value) === index)
+
+
+    if(sortedData[0].nearest != Infinity){
+      return {
+        props: {
+          rides: sortedData,
+          user: user.data,
+          upcomingLength,
+          pastLength,
+          states,
+          city
+        }
+      }
+    }
+
+  }catch(err){
+    console.log(err)
+  }
 }
