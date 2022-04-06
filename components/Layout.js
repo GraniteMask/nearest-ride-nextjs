@@ -52,7 +52,7 @@ export default function Layout({title, description, name, imgUrl, children}) {
                 <AppBar position="static" className="navbar">
                     <Toolbar >
                         <Box display="flex" alignItems="center">
-                        <NextLink href="/" passHref>
+                        <NextLink href="#" passHref>
                             <Link>
                                 <Typography className="banner">
                                     Edvora

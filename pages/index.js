@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
@@ -12,24 +12,24 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import { AccordionDetails, ListItem } from "@material-ui/core";
 import axios from "axios";
 import moment from "moment";
+import RideCard from "../components/RideCard";
 
 export default function Home(props) {
   const [ride, setRide] = useState('nearest');
   const [anchorEl, setAnchorEl] = useState(null);
   const [nearest, setNearest] = useState(true)
   const [upcoming, setUpcoming] = useState(false)
+  const[newCities, SetNewCities] = useState([])
   const [past, setPast] = useState(false)
-  const {rides, user, upcomingLength, pastLength, states, city} = props
+  const [chosenState, SetChosenState] = useState('')
+  const [chosenCity, SetChosenCity] = useState('')
+  const {rides, user, upcomingLength, pastLength, states} = props
+  var {city} = props
   const open = Boolean(anchorEl);
-  const textLightColor = "#CFCFCF"
-  const textWhiteColor = "#FFFFFF"
   var today = new Date();
-
-  // console.log(today)
-
+  
   const StyledFilter = styled((props)=>(
     <Menu
-      
       {...props}
     />
   ))(({theme}) => ({
@@ -49,9 +49,38 @@ export default function Home(props) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  const handleClose = () => {
+
+  const handleClose = (e) => {
     setAnchorEl(null);
+    console.log(e)
   };
+
+  const chooseState = (e) => {
+    setAnchorEl(null);
+    // console.log(e)
+    SetChosenState(e)
+    SetNewCities([])
+    SetChosenCity('')
+  };
+
+  const chooseCity = (e) => {
+    setAnchorEl(null);
+    // console.log(e)
+    SetChosenCity(e)
+  };
+
+  useEffect(()=>{
+    if(chosenState !== ''){
+      
+      for(var i=0; i<rides.length; i++){
+        if(rides[i].state == chosenState){
+          if(newCities.includes(rides[i].city) == false){
+            newCities.push(rides[i].city)
+          }
+        }
+      }
+    } 
+  },[chosenState])
 
   const handleOptions = (option) =>{
     if(option == 'nearest'){
@@ -132,12 +161,13 @@ export default function Home(props) {
                   <List>
                     {
                       states && states.map(state=>(
-                        <MenuItem onClick={handleClose} sx={{
+                        <MenuItem value={state} onClick={()=>chooseState(state)} sx={{
                           borderRadius: "5px",
                         '&:hover': {
                           color: '#A5A5A5',
                         },
                         }}
+                        
                         >
                           {state}
                         </MenuItem>
@@ -164,8 +194,8 @@ export default function Home(props) {
                 <AccordionDetails>
                   <List>
                     {
-                      city && city.map(eachCity=>(
-                        <MenuItem onClick={handleClose} sx={{
+                      city && chosenState == '' ? city.map(eachCity=>(
+                        <MenuItem onClick={() => chooseCity(eachCity)} sx={{
                           borderRadius: "5px",
                         '&:hover': {
                           color: '#A5A5A5',
@@ -175,54 +205,55 @@ export default function Home(props) {
                           {eachCity}
                         </MenuItem>
                       ))
+                      :
+                      newCities.length != 0 && chosenState != '' ?
+                      newCities.map(eachCity=>(
+                        <MenuItem onClick={() => chooseCity(eachCity)} sx={{
+                          borderRadius: "5px",
+                        '&:hover': {
+                          color: '#A5A5A5',
+                        },
+                        }}
+                        >
+                          {eachCity}
+                        </MenuItem>
+                      )) : ""
                     }
                     
                     
                   </List>        
                 </AccordionDetails>
               </Accordion>
-              
-           
-            {/* <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
-            <MenuItem onClick={handleClose}>Logout</MenuItem> */}
           </div>
         </StyledFilter>
         
       </Tabs>
 
-      { nearest &&
+      { nearest && chosenState == '' && chosenCity == ''?
         rides.map(ride=>(
-          <Card className="rideCards" style={{backgroundColor: "#171717"}}>
-            <CardContent>
-              <img src={ride.map_url} alt="map" height="148" width="296" className="imageCard" />
-            </CardContent>
-            
-            <CardContent >
-              <Typography variant="body2" color={textLightColor} className="rideParams ">
-                Ride Id: <span color={textWhiteColor}>{ride.id}</span>
-            
-                <span className="chipRow">
-                  <Chip label={ride.city} className="cityStateChip"/>
-                  <Chip label={ride.state} className="cityStateChip"/>
-                </span>
-                
-              </Typography>
-              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
-                Origin Station: <span color={textWhiteColor}>{ride.origin_station_code}</span>
-              </Typography>
-              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                station_path: <span color={textWhiteColor}>{JSON.stringify(ride.station_path)}</span>
-              </Typography>
-              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                Date: <span color={textWhiteColor}>{ride.date}</span>
-              </Typography>
-              <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                Distance: <span color={textWhiteColor}>{ride.nearest}</span>
-              </Typography>
-            </CardContent>
-          </Card>
+          <RideCard ride={ride} />
         ))
+        :
+        nearest && chosenState !== '' && chosenCity == ''?
+        rides.map(ride=>{
+
+          if(ride.state == chosenState){
+            return(
+              <RideCard ride={ride} />
+            )
+          }
+          })
+        : 
+        nearest && chosenCity !== '' ?
+        rides.map(ride=>{
+
+          if(ride.city == chosenCity){
+            return(
+              <RideCard ride={ride} />
+            )
+          }
+          })
+          : ""
       }
       
       {
@@ -232,35 +263,7 @@ export default function Home(props) {
             {
               moment(ride.date).format() > moment(today).format() ?
               (
-                <Card className="rideCards" style={{backgroundColor: "#171717"}}>
-                  <CardContent>
-                    <img src={ride.map_url} alt="map" height="148" width="296" className="imageCard" />
-                  </CardContent>
-                  
-                  <CardContent >
-                    <Typography variant="body2" color={textLightColor} className="rideParams ">
-                      Ride Id: <span color={textWhiteColor}>{ride.id}</span>
-                  
-                      <span className="chipRow">
-                        <Chip label={ride.city} className="cityStateChip"/>
-                        <Chip label={ride.state} className="cityStateChip"/>
-                      </span>
-                      
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
-                      Origin Station: <span color={textWhiteColor}>{ride.origin_station_code}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      station_path: <span color={textWhiteColor}>{JSON.stringify(ride.station_path)}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      Date: <span color={textWhiteColor}>{ride.date}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      Distance: <span color={textWhiteColor}>{ride.nearest}</span>
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <RideCard ride={ride} />
               ) : ""
             }
           </>
@@ -273,35 +276,7 @@ export default function Home(props) {
             {
               moment(ride.date).format() < moment(today).format() ?
               (
-                <Card className="rideCards" style={{backgroundColor: "#171717"}}>
-                  <CardContent>
-                    <img src={ride.map_url} alt="map" height="148" width="296" className="imageCard" />
-                  </CardContent>
-                  
-                  <CardContent >
-                    <Typography variant="body2" color={textLightColor} className="rideParams ">
-                      Ride Id: <span color={textWhiteColor}>{ride.id}</span>
-                  
-                      <span className="chipRow">
-                        <Chip label={ride.city} className="cityStateChip"/>
-                        <Chip label={ride.state} className="cityStateChip"/>
-                      </span>
-                      
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "5px"}}>
-                      Origin Station: <span color={textWhiteColor}>{ride.origin_station_code}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      station_path: <span color={textWhiteColor}>{JSON.stringify(ride.station_path)}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      Date: <span color={textWhiteColor}>{ride.date}</span>
-                    </Typography>
-                    <Typography variant="body2" color={textLightColor} className="rideParams" style={{marginTop: "8px"}}>
-                      Distance: <span color={textWhiteColor}>{ride.nearest}</span>
-                    </Typography>
-                  </CardContent>
-                </Card>
+                <RideCard ride={ride} />
               ) : ""
             }
           </>
