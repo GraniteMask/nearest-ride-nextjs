@@ -25,10 +25,11 @@ export default function Home(props) {
   const [past, setPast] = useState(false)
   const [chosenState, SetChosenState] = useState('')
   const [chosenCity, SetChosenCity] = useState('')
+  const Router = useRouter()
   const {rides, user, upcomingLength, pastLength, states, city} = props
   const open = Boolean(anchorEl);
   var today = new Date();
-  const Router = useRouter()
+  
   
   const StyledFilter = styled((props)=>(
     <Menu
