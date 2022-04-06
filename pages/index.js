@@ -270,32 +270,27 @@ export default function Home(props) {
         ))
         :
         upcoming && chosenState !== '' && chosenCity == '' ?
-        rides.map(ride=>(
-          <>
-            {
-              moment(ride.date).format() > moment(today).format() ?
-              (
-                <RideCard ride={ride} />
-              ) : ""
-            }
-          </>
-        ))
+        rides.map(ride=>{
+          
+          if(moment(ride.date).format() < moment(today).format() && ride.state == chosenState) 
+          return(
+            <RideCard ride={ride} />
+          ) 
+       
+    })
         :
         upcoming && chosenCity !== '' ?
-        rides.map(ride=>(
-          <>
-            {
-              moment(ride.date).format() > moment(today).format() ?
-              (
-                <RideCard ride={ride} />
-              ) : ""
-            }
-          </>
-        ))
+        rides.map(ride=>{
+          
+          if(moment(ride.date).format() < moment(today).format() && ride.city == chosenCity) 
+          return(
+            <RideCard ride={ride} />
+          ) 
+        })
         : ""   
       }
       {
-        past &&
+        past && chosenState == '' && chosenCity == '' ?
         rides.map(ride=>(
           <>
             {
@@ -306,6 +301,26 @@ export default function Home(props) {
             }
           </>
         ))
+        :
+        past && chosenState !== '' && chosenCity == '' ?
+        rides.map(ride=>{
+          
+              if(moment(ride.date).format() < moment(today).format() && ride.state == chosenState) 
+              return(
+                <RideCard ride={ride} />
+              ) 
+           
+        })
+        :
+        past && chosenCity !== '' ?
+        rides.map(ride=>{
+          
+              if(moment(ride.date).format() < moment(today).format() && ride.city == chosenCity) 
+              return(
+                <RideCard ride={ride} />
+              ) 
+        })
+        : ""
       }
       
       
