@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab'
 import FilterListIcon from '@mui/icons-material/FilterList';
-import { Accordion, AccordionSummary, Button, Card, CardContent, Chip, Divider, List, Typography } from "@mui/material";
+import { Accordion, AccordionSummary, Button, Divider, List, Typography } from "@mui/material";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from "@mui/system";
@@ -161,7 +161,7 @@ export default function Home(props) {
                   <List>
                     {
                       states && states.map(state=>(
-                        <MenuItem value={state} onClick={()=>chooseState(state)} sx={{
+                        <MenuItem key={Math.random()} value={state} onClick={()=>chooseState(state)} sx={{
                           borderRadius: "5px",
                         '&:hover': {
                           color: '#A5A5A5',
@@ -195,7 +195,7 @@ export default function Home(props) {
                   <List>
                     {
                       city && chosenState == '' ? city.map(eachCity=>(
-                        <MenuItem onClick={() => chooseCity(eachCity)} sx={{
+                        <MenuItem key={Math.random()} onClick={() => chooseCity(eachCity)} sx={{
                           borderRadius: "5px",
                         '&:hover': {
                           color: '#A5A5A5',
@@ -208,7 +208,7 @@ export default function Home(props) {
                       :
                       newCities.length != 0 && chosenState != '' ?
                       newCities.map(eachCity=>(
-                        <MenuItem onClick={() => chooseCity(eachCity)} sx={{
+                        <MenuItem key={Math.random()}  onClick={() => chooseCity(eachCity)} sx={{
                           borderRadius: "5px",
                         '&:hover': {
                           color: '#A5A5A5',
@@ -231,7 +231,7 @@ export default function Home(props) {
 
       { nearest && chosenState == '' && chosenCity == ''?
         rides.map(ride=>(
-          <RideCard ride={ride} />
+          <RideCard ride={ride} key={ride.id}/>
         ))
         :
         nearest && chosenState !== '' && chosenCity == ''?
@@ -239,7 +239,7 @@ export default function Home(props) {
 
           if(ride.state == chosenState){
             return(
-              <RideCard ride={ride} />
+              <RideCard ride={ride} key={ride.id}/>
             )
           }
           })
@@ -249,7 +249,7 @@ export default function Home(props) {
 
           if(ride.city == chosenCity){
             return(
-              <RideCard ride={ride} />
+              <RideCard ride={ride} key={ride.id}/>
             )
           }
           })
@@ -263,7 +263,7 @@ export default function Home(props) {
             {
               moment(ride.date).format() > moment(today).format() ?
               (
-                <RideCard ride={ride} />
+                <RideCard ride={ride} key={ride.id}/>
               ) : ""
             }
           </>
@@ -274,7 +274,7 @@ export default function Home(props) {
           
           if(moment(ride.date).format() > moment(today).format() && ride.state == chosenState) 
           return(
-            <RideCard ride={ride} />
+            <RideCard ride={ride} key={ride.id}/>
           ) 
        
     })
@@ -284,7 +284,7 @@ export default function Home(props) {
           
           if(moment(ride.date).format() > moment(today).format() && ride.city == chosenCity) 
           return(
-            <RideCard ride={ride} />
+            <RideCard ride={ride} key={ride.id}/>
           ) 
         })
         : ""   
@@ -296,7 +296,7 @@ export default function Home(props) {
             {
               moment(ride.date).format() < moment(today).format() ?
               (
-                <RideCard ride={ride} />
+                <RideCard ride={ride} key={ride.id}/>
               ) : ""
             }
           </>
@@ -307,7 +307,7 @@ export default function Home(props) {
           
               if(moment(ride.date).format() < moment(today).format() && ride.state == chosenState) 
               return(
-                <RideCard ride={ride} />
+                <RideCard ride={ride} key={ride.id}/>
               ) 
            
         })
@@ -317,7 +317,7 @@ export default function Home(props) {
           
               if(moment(ride.date).format() < moment(today).format() && ride.city == chosenCity) 
               return(
-                <RideCard ride={ride} />
+                <RideCard ride={ride} key={ride.id}/>
               ) 
         })
         : ""
@@ -330,8 +330,8 @@ export default function Home(props) {
 }
 
 export async function getServerSideProps(){
-  const {data} = await axios.get('https://assessment.api.vweb.app/rides')
-  const user = await axios.get('https://assessment.api.vweb.app/user')
+  const {data} = await axios.get(`${process.env.RIDE_API}`)
+  const user = await axios.get(`${process.env.USER_API}`)
   var upcomingLength = 0 
   var pastLength = 0 
   var today = new Date();

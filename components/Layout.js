@@ -3,7 +3,6 @@ import Head from 'next/head'
 import NextLink from 'next/link'
 import {AppBar, Typography, Toolbar, Container, Link, ThemeProvider, CssBaseline, Switch, Badge, Button, Menu, MenuItem, Box, IconButton, Drawer, Divider, List, ListItem, ListItemText, makeStyles} from '@material-ui/core'
 import { createTheme } from '@material-ui/core/styles'
-import axios from 'axios'
 import { Avatar } from '@mui/material'
 ;
 
