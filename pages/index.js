@@ -253,11 +253,11 @@ export default function Home(props) {
             )
           }
           })
-          : ""
+        : ""
       }
       
       {
-        upcoming &&
+        upcoming && chosenState == '' && chosenCity == '' ?
         rides.map(ride=>(
           <>
             {
@@ -268,6 +268,31 @@ export default function Home(props) {
             }
           </>
         ))
+        :
+        upcoming && chosenState !== '' && chosenCity == '' ?
+        rides.map(ride=>(
+          <>
+            {
+              moment(ride.date).format() > moment(today).format() ?
+              (
+                <RideCard ride={ride} />
+              ) : ""
+            }
+          </>
+        ))
+        :
+        upcoming && chosenCity !== '' ?
+        rides.map(ride=>(
+          <>
+            {
+              moment(ride.date).format() > moment(today).format() ?
+              (
+                <RideCard ride={ride} />
+              ) : ""
+            }
+          </>
+        ))
+        : ""   
       }
       {
         past &&
@@ -325,11 +350,7 @@ export async function getServerSideProps(){
   .filter((value, index, self) => self.indexOf(value) === index)
   const city = sortedData.map(item => item.city)
   .filter((value, index, self) => self.indexOf(value) === index)
-  
-  console.log(states.sort())
-  console.log(city.sort())
-  // console.log(sortedData)
-  // console.log(user.data.station_code)
+
 
   if(sortedData[0].nearest != Infinity){
     return {
