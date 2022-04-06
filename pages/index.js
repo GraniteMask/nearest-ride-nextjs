@@ -272,7 +272,7 @@ export default function Home(props) {
         upcoming && chosenState !== '' && chosenCity == '' ?
         rides.map(ride=>{
           
-          if(moment(ride.date).format() < moment(today).format() && ride.state == chosenState) 
+          if(moment(ride.date).format() > moment(today).format() && ride.state == chosenState) 
           return(
             <RideCard ride={ride} />
           ) 
@@ -282,7 +282,7 @@ export default function Home(props) {
         upcoming && chosenCity !== '' ?
         rides.map(ride=>{
           
-          if(moment(ride.date).format() < moment(today).format() && ride.city == chosenCity) 
+          if(moment(ride.date).format() > moment(today).format() && ride.city == chosenCity) 
           return(
             <RideCard ride={ride} />
           ) 
