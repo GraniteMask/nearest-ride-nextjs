@@ -244,37 +244,41 @@ export default function Home(props) {
         
       </Tabs>
 
-      { nearest && chosenState == '' && chosenCity == ''?
+      { nearest && chosenState == '' && chosenCity == ''&&
         rides.map(ride=>{
+          console.log(ride)
             return(
               <RideCard ride={ride} key={ride.id}/>
             )
         })
-        :
-        nearest && chosenState !== '' && chosenCity == ''?
+      }
+      { nearest && chosenState !== '' && chosenCity == '' &&
         rides.map(ride=>{
 
           if(ride.state == chosenState){
+            console.log(ride)
             return(
               <RideCard ride={ride} key={ride.id}/>
             )
           }
           })
-        : 
-        nearest && chosenCity !== '' ?
+        }
+        {
+        nearest && chosenCity !== '' &&
         rides.map(ride=>{
 
           if(ride.city == chosenCity){
+            console.log(ride)
             return(
               <RideCard ride={ride} key={ride.id}/>
             )
           }
           })
-        : ""
+     
       }
       
       {
-        upcoming && chosenState == '' && chosenCity == '' ?
+        upcoming && chosenState == '' && chosenCity == '' &&
         rides.map(ride=>(
           <>
             {
@@ -285,8 +289,8 @@ export default function Home(props) {
             }
           </>
         ))
-        :
-        upcoming && chosenState !== '' && chosenCity == '' ?
+      }
+      {  upcoming && chosenState !== '' && chosenCity == '' &&
         rides.map(ride=>{
           
           if(moment(ride.date).format() > moment(today).format() && ride.state == chosenState) 
@@ -294,20 +298,20 @@ export default function Home(props) {
             <RideCard ride={ride} key={ride.id}/>
           ) 
        
-    })
-        :
-        upcoming && chosenCity !== '' ?
+      })
+      }
+      { upcoming && chosenCity !== '' &&
         rides.map(ride=>{
           
           if(moment(ride.date).format() > moment(today).format() && ride.city == chosenCity) 
           return(
             <RideCard ride={ride} key={ride.id}/>
           ) 
-        })
-        : ""   
+        })   
       }
+
       {
-        past && chosenState == '' && chosenCity == '' ?
+        past && chosenState == '' && chosenCity == '' &&
         rides.map(ride=>(
           <>
             {
@@ -318,8 +322,8 @@ export default function Home(props) {
             }
           </>
         ))
-        :
-        past && chosenState !== '' && chosenCity == '' ?
+      }
+      {  past && chosenState !== '' && chosenCity == '' &&
         rides.map(ride=>{
           
               if(moment(ride.date).format() < moment(today).format() && ride.state == chosenState) 
@@ -328,8 +332,9 @@ export default function Home(props) {
               ) 
            
         })
-        :
-        past && chosenCity !== '' ?
+      }
+      {
+        past && chosenCity !== '' &&
         rides.map(ride=>{
           
               if(moment(ride.date).format() < moment(today).format() && ride.city == chosenCity) 
@@ -337,7 +342,6 @@ export default function Home(props) {
                 <RideCard ride={ride} key={ride.id}/>
               ) 
         })
-        : ""
       }
       
       
